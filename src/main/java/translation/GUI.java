@@ -8,10 +8,10 @@ import java.awt.event.*;
 
 public class GUI {
     public static Translator translator = new JSONTranslator();
+    public static CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
+    public static LanguageCodeConverter languageCodeConverter = new LanguageCodeConverter();
 
     public static void main(String[] args) {
-        CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
-        LanguageCodeConverter languageCodeConverter = new LanguageCodeConverter();
 
         SwingUtilities.invokeLater(() -> {
             JPanel languagePanel = new JPanel();
@@ -58,7 +58,10 @@ public class GUI {
     }
 
     public static String runTranslate(String language, String country) {
-        String result = translator.translate(country, language);
+        String result = translator.translate(
+                countryCodeConverter.fromCountry(country).toLowerCase(),
+                languageCodeConverter.fromLanguage(language));
+        System.out.println(result);
         if (result == null) {
             result = "no translation found!";
         }

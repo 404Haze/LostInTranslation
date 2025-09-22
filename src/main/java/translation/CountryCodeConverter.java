@@ -76,7 +76,7 @@ public class CountryCodeConverter {
     }
 
     public String[] getCountryList() {
-        Set<String> countrySet = countryCodeToCountry.keySet();
+        Set<String> countrySet = countryToCountryCode.keySet();
         return countrySet.toArray(new String[0]);
     }
 }

@@ -91,6 +91,11 @@ public class JSONTranslator implements Translator {
 
     @Override
     public String translate(String countryCode, String languageCode) {
+        for(String k : translations.keySet()) {
+            System.out.println(k);
+            System.out.println(translations.get(k));
+        }
+
         String k = countryCode + "-" + languageCode;
         return translations.get(k);
     }

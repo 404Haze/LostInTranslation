@@ -44,15 +44,11 @@ public class LanguageCodeConverter {
                 String line = iterator.next();
                 if (line.isEmpty()) continue;
 
-                String[] parts = line.split(",");
-                if (parts.length >= 2){
-                    String code = parts[0].trim();
-                    String language = parts[1].trim();
-
-                    languageCodeToLanguage.put(code,language);
-                    languageToLanguageCode.put(language,code);
-
-                }
+                String[] parts = line.split("\t");
+                String code = parts[1];
+                String language = parts[0];
+                languageCodeToLanguage.put(code,language);
+                languageToLanguageCode.put(language,code);
 
             }
 

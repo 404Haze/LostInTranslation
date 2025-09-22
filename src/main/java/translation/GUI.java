@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 
 public class GUI {
+    public static Translator translator = new JSONTranslator();
 
     public static void main(String[] args) {
         CountryCodeConverter countryCodeConverter = new CountryCodeConverter();
@@ -57,8 +58,6 @@ public class GUI {
     }
 
     public static String runTranslate(String language, String country) {
-        Translator translator = new JSONTranslator();
-
         String result = translator.translate(country, language);
         if (result == null) {
             result = "no translation found!";

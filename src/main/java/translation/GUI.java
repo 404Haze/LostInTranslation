@@ -1,6 +1,8 @@
 package translation;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import java.awt.*;
 import java.awt.event.*;
 
 
@@ -25,43 +27,25 @@ public class GUI {
             JPanel resultPanel = new JPanel();
             JLabel resultLabelText = new JLabel("Translation:");
             JLabel resultLabel = new JLabel("\t\t\t\t\t\t\t");
+            resultPanel.add(resultLabelText);
+            resultPanel.add(resultLabel);
 
             JPanel countryPanel = new JPanel();
+            countryPanel.setLayout(new BorderLayout()); // makes it full width
             JList<String> countryList = new JList<>(countryCodeConverter.getCountryList());
+            countryPanel.add(countryList);
 
             languageField.addItemListener((ItemEvent e) -> {
                 String language = (String) languageField.getSelectedItem();
-                String country = countryField.getText();
-
-                Translator translator = new CanadaTranslator();
-
-                String result = translator.translate(country, language);
-                if (result == null) {
-                    result = "no translation found!";
-                }
-                resultLabel.setText(result);
+                String country = countryList.getSelectedValue();
+                resultLabel.setText(runTranslate(language, country));
             });
 
-            // adding listener for when the user clicks the submit button
-//            submit.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    String language = languageField.getText();
-//                    String country = countryField.getText();
-//
-//                    // for now, just using our simple translator, but
-//                    // we'll need to use the real JSON version later.
-//                    Translator translator = new CanadaTranslator();
-//
-//                    String result = translator.translate(country, language);
-//                    if (result == null) {
-//                        result = "no translation found!";
-//                    }
-//                    resultLabel.setText(result);
-//
-//                }
-//
-//            });
+            countryList.addListSelectionListener((ListSelectionEvent e ) -> {
+                String language = (String) languageField.getSelectedItem();
+                String country = countryList.getSelectedValue();
+                resultLabel.setText(runTranslate(language, country));
+            });
 
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -75,5 +59,15 @@ public class GUI {
             frame.pack();
             frame.setVisible(true);
         });
+    }
+
+    public static String runTranslate(String language, String country) {
+        Translator translator = new JSONTranslator();
+
+        String result = translator.translate(country, language);
+        if (result == null) {
+            result = "no translation found!";
+        }
+        return result;
     }
 }

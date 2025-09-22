@@ -78,4 +78,8 @@ public class CountryCodeConverter {
         // TODO Task B: update this code to use an instance variable to return the correct value
         return 0;
     }
+
+    public String[] getCountryList() {
+        return new String[] {"asdas", "sdadas"};
+    }
 }
